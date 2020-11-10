@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import ViewDL from './ViewDL'
+import DLData from './DLData'
 
 export class Dashboard extends Component {
     constructor(props) {
@@ -13,7 +14,7 @@ export class Dashboard extends Component {
     }
 
     componentDidMount(){
-        axios.post(`http://localhost:8001/get-sublist`, {
+        axios.post(`http://localhost:5001/get-sublist`, {
             user_name: this.state.loggedInUser
         })
       .then(res => {
@@ -26,7 +27,8 @@ export class Dashboard extends Component {
         return (
             <div>
                 {this.state.subList.map(dl => (
-                    <ViewDL dl_name={dl} />
+                    // <ViewDL key={dl} dl_name={dl} />
+                    <DLData dl_name={dl} />
                 ))}
             </div>
         )

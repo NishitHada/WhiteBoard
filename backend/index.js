@@ -3,7 +3,7 @@ const mongoose=require('mongoose')
 const db_config=require('./db_config')
 const bodyParser = require('body-parser')
 const cors=require('cors')
-const port=8001
+const port=5001
 
 app = express()
 app.use(cors())
