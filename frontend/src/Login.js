@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-var querystring = require('querystring');
+// var querystring = require('querystring');
 
 export class Login extends Component {
     constructor(props) {
         super(props)
     
         this.state = {
+            isLoggedIn: 0,
              user_name: '',
              password: ''
         }
@@ -28,11 +29,16 @@ export class Login extends Component {
         event.preventDefault();
         console.log(this.state)
         axios.post('http://localhost:8001/login', 
-        // JSON.stringify(this.state))
-        querystring.stringify(this.state))
+        // {this.state.user_name, this.state.password})
+        {
+            "user_name": this.state.user_name,
+            "password": this.state.password
+        })
+        // JSON.stringify(this.state.user_name, this.state.password))
+        // querystring.stringify(this.state.user_name, this.state.password))
         .then(response => {
             console.log(response)
-            
+            // if(response)
         })
         .catch(error => {
             console.log(error)  

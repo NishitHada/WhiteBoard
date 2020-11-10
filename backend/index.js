@@ -7,7 +7,8 @@ const port=8001
 
 app = express()
 app.use(cors())
-app.use(bodyParser.urlencoded({ extended:true }));
+// app.use(bodyParser.urlencoded({ extended:true }));
+app.use(bodyParser.json())
 
 // try{
 //     db_config.connectDB().then(
@@ -27,23 +28,31 @@ db_config.connectDB().then(
             res.send('Hello').status(200);
         })
 
+        app.post('/json', (req, res) => {
+            console.log(req.body);
+            // console.log(JSON.parse(req.body));
+            // console.log(req.body['user_name']);
+            // console.log(req.body['password']);
+            res.sendStatus(200);
+        })
+
         app.post('/login', (req,res) => {
-            let tmp = JSON.stringify(req.body);
-            let tmp1 = JSON.parse(tmp);
-            console.log(tmp1);
-            console.log(tmp1.user_name);
-            console.log(tmp1.password);
+            // let tmp = JSON.stringify(req.body);
+            // let tmp1 = JSON.parse(tmp);
+            // console.log(tmp1);
+            // console.log(tmp1.user_name);
+            // console.log(tmp1.password);
 
             let Usr = mongoose.model("Usr", db_config.credentials_schema);
             
             try{
-                Usr.find({user_name: tmp1.user_name}).then( (data) => {
+                Usr.find({user_name: req.body.user_name}).then( (data) => {
                     if(data.length == 0)
                     {
                         console.log('User doesnt exist');
                         res.send('User doesnt exist').status(200);
                     }
-                    else if(data[0]['password'] === tmp1.password)
+                    else if(data[0]['password'] === req.body.password)
                     {
                         console.log(data);
                         res.send('Successful Sign-in').status(200);
