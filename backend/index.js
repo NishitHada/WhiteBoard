@@ -28,12 +28,97 @@ db_config.connectDB().then(
             res.send('Hello').status(200);
         })
 
-        app.post('/json', (req, res) => {
+        app.post('/get-tasks', async (req, res) => {
             console.log(req.body);
-            // console.log(JSON.parse(req.body));
-            // console.log(req.body['user_name']);
-            // console.log(req.body['password']);
-            res.sendStatus(200);
+
+            let task = mongoose.model("task", db_config.task_schema, 
+            req.body['tasklist_collection_name']);
+            // let data= await task.find({});
+            // console.log(data)
+
+            try{
+                task.find({}).then( (data) => {
+                    console.log(data);
+                    res.send(data).status(200);
+                })
+            }
+            catch(error){
+                res.send(error);
+            }
+
+            // res.sendStatus(200);
+        })
+
+        app.post('/get-dl-props', async (req, res) => {
+            console.log(req.body);
+
+            let dl = mongoose.model("dl", db_config.dl_schema);
+            // let dl_data = await dl.findOne({Name: req.body['Name']});
+            // console.log(dl_data);
+
+            try{
+                dl.findOne({Name: req.body['Name']}).then( (data) => {
+                    console.log(data);
+                    res.send(data).status(200);
+                })
+            }
+            catch(error){
+                res.send(error);
+            }
+
+            // res.sendStatus(200);
+
+        })
+
+        app.post('/get-sublist', async (req,res) => {
+            console.log(req.body);
+            
+            let user = mongoose.model("user", db_config.user_schema);
+            
+            // let data = await user.find({user_name: req.body['user_name']});
+            // console.log(data);
+            // console.log(data['sub']);
+
+            try{
+                user.findOne({user_name: req.body['user_name']}).then( (data) => {
+                    console.log(data);
+                    res.send(data['sub']).status(200);
+                })
+            }
+            catch(error){
+                res.send(error);
+            }
+
+            // res.sendStatus(200);
+        })
+
+        app.post('/create-dl', (req, res) => {
+            console.log(req.body);
+            let dl = mongoose.model("dl", db_config.dl_schema);
+            dl.insertMany(req.body, (error, result) => {
+                if(error) res.send(error);
+                else res.send(result).status(200);
+            })
+        })
+
+        app.post('/add-task', async (req, res) => {
+            console.log(req.body);
+
+            let dl = mongoose.model("dl", db_config.dl_schema);
+            data = await dl.find({'Name': req.body['ParentDL']});
+            console.log(data);
+            let tasklist_collection_name= data[0]['tasklist_collection_name'];
+            console.log(tasklist_collection_name);
+            
+            let task = mongoose.model('task', db_config.task_schema, 
+            tasklist_collection_name);
+            // { collection: `${tasklist_collection_name}` });
+            task.insertMany(req.body, (error, result) => {
+                if(error) res.send(error);
+                else res.send(result).status(200);
+            })
+
+            // res.sendStatus(200);
         })
 
         app.post('/login', (req,res) => {

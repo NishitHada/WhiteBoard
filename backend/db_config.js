@@ -22,16 +22,29 @@ const connectDB = async () => {
     }
 };
 
+const user_schema = new mongoose.Schema({
+    user_name: String,
+    sub: [String]
+},
+{
+    collection: 'sub-list'
+})
+
 const dl_props_schema = new mongoose.Schema({
-    dl_name: String,
-    color: String,
+    Name: String,
+    Color: String,
     // rwx_list: String,
-    taskList_collection_name: String,
-    owner: String
+    tasklist_collection_name: String,
+    Owner: String
 },
 {
     collection: 'dl_props'
 });
+
+const task_schema = new mongoose.Schema({
+    ParentDL: String,
+    Desc: String 
+})
 
 const credentials_schema = new mongoose.Schema({
     user_name: String,
@@ -49,5 +62,8 @@ const credentials_schema = new mongoose.Schema({
 exports.mongoConnectionString = mongoConnectionString;
 exports.connectDB = connectDB;
 exports.credentials_schema = credentials_schema;
+exports.dl_schema = dl_props_schema;
+exports.task_schema = task_schema;
+exports.user_schema = user_schema;
 // exports.EmpSchema = EmpSchema;
 
