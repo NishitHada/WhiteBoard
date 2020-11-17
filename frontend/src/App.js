@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import Login from './Login'
 import Dashboard from './Dashboard'
-import ViewDL from './ViewDL'
-import TaskList from './TaskList'
 import DLData from './DLData'
+import "./App.css";
 
 export class App extends Component {
   constructor(props) {
@@ -16,8 +15,18 @@ export class App extends Component {
   
   render() {
     return (
-      <div>
-        <Dashboard />
+      <div className="main">
+        <div className='heading'> 
+          <h1>WhiteBoard</h1>
+        </div>
+        <div className="bbody">
+          <div className="dashboard" >
+            <Dashboard />
+          </div>
+          <div className="filter">
+            Filter
+          </div>
+        </div>
         {/* <DLData dl_name="Company-wide" /> */}
         {/* <DLData dl_name="Dev" /> */}
         {/* <ViewDL dl_name="Company-wide" /> */}
