@@ -30,9 +30,9 @@ router.post('/add-task', async (req, res) => {
     console.log(req.body);
 
     let dl = mongoose.model("dl", db_config.dl_schema);
-    data = await dl.find({'Name': req.body['ParentDL']});
+    data = await dl.findOne({'Name': req.body['ParentDL']});
     console.log(data);
-    let tasklist_collection_name= data[0]['tasklist_collection_name'];
+    let tasklist_collection_name= data['tasklist_collection_name'];
     console.log(tasklist_collection_name);
     
     let task = mongoose.model('task', db_config.task_schema, 
@@ -45,6 +45,27 @@ router.post('/add-task', async (req, res) => {
 
     // res.sendStatus(200);
 })
+
+router.post('/remove-task', async(req, res) => {
+    console.log(req.body);
+    
+    let dl = mongoose.model("dl", db_config.dl_schema);
+    data = await dl.findOne({'Name': req.body['ParentDL']});
+    console.log(data);
+    let tasklist_collection_name= data['tasklist_collection_name'];
+    console.log(tasklist_collection_name);
+
+    let task = mongoose.model('task', db_config.task_schema, 
+    tasklist_collection_name);
+
+    task.deleteOne({_id: req.body['_id']}, (error, result) => {
+        if(error) res.send(error);
+        else res.send(result).status(200);
+    })
+
+    // res.sendStatus(200);
+})
+
 
 
 exports.router = router;
