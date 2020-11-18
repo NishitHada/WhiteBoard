@@ -1,0 +1,11 @@
+.new-task-container{
+    display: inline-flex;
+}
+
+.new-task-desc{
+    display: inline-flex;
+}
+
+.add-btn{
+    display: inline-flex;
+}
