@@ -1,0 +1,10 @@
+.task{
+    background-color: ivory;
+    border: solid 1px;
+    margin: 3px;
+    padding: 1px;
+}
+
+.mark-task{
+    float: right;
+}
