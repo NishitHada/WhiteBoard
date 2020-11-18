@@ -1,0 +1,12 @@
+.add-button{
+    display: flexbox;
+    background-color: white;
+    border-radius: 20px;
+    border: solid 1px;
+    float: right;
+}
+
+.dl{
+    /* position: fixed; */
+    /* top: 0; */
+}
